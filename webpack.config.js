@@ -33,6 +33,16 @@ module.exports = {
                             minimize: true
                         }
                     }, {
+                        loader: 'postcss-loader', // Run post css actions
+                        options: {
+                            plugins: function () { // post css plugins, can be exported to postcss.config.js
+                                return [
+                                    require('precss'),
+                                    require('autoprefixer')
+                                ];
+                            }
+                        }
+                    }, {
                         loader: "sass-loader"
                     }],
                     // use style-loader in development
@@ -74,6 +84,12 @@ module.exports = {
         new UglifyJSPlugin(),
         new StyleLintPlugin({
             syntax: 'scss'
+        }),
+        new webpack.ProvidePlugin({
+            $: 'jquery',
+            jQuery: 'jquery',
+            'window.jQuery': 'jquery',
+            Popper: ['popper.js', 'default']
         })
     ]
 };
