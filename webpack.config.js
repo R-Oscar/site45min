@@ -15,6 +15,7 @@ const extractSass = new ExtractTextPlugin({
 
 module.exports = {
     entry: './src/index',
+    devtool: 'inline-source-map',
     devServer: {
         contentBase: './dist'
     },
@@ -30,7 +31,8 @@ module.exports = {
                     use: [{
                         loader: "css-loader",
                         options: {
-                            minimize: true
+                            minimize: true,
+                            sourceMap: true
                         }
                     }, {
                         loader: 'postcss-loader', // Run post css actions
@@ -40,10 +42,14 @@ module.exports = {
                                     require('precss'),
                                     require('autoprefixer')
                                 ];
-                            }
+                            },
+                            sourceMap: true
                         }
                     }, {
-                        loader: "sass-loader"
+                        loader: "sass-loader",
+                        options: {
+                            sourceMap: true
+                        }
                     }],
                     // use style-loader in development
                     fallback: "style-loader"
